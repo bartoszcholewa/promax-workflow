@@ -1,0 +1,28 @@
+{% extends "homepage/header.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-md-2">
+{% if form.errors %}
+<p>Niepoprawne dane logowania. Spróbuj ponownie</p>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Twoje konto nie posiada dostępu do tej sekcji. By kontynuować,
+    zaloguj się na konto z uprawnieniami.</p>
+    {% else %}
+    <p>Zaloguj się by uzyskać dostęp.</p>
+    {% endif %}
+{% endif %}
+
+<form method="post" class="uniForm" action="{% url 'login' %}">
+{% csrf_token %}
+
+{{ form|crispy }}
+
+<input type="submit" value="Login" class="btn btn-primary" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+</div>
+
+{% endblock %}

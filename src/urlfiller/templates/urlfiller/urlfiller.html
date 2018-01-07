@@ -1,0 +1,224 @@
+{% extends "homepage/header.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+	
+.btn-podglad {
+    background-color: #4bcec3;
+    color: white;
+    font-weight: bold;
+    transition: 0.1s;
+}
+
+</style>
+<div class="col-md-8">
+<h2>Uzyskaj informacje z adresu URL<small> - AJAXify Django Forms</small></h2><hr>
+
+		<form class='my-ajax-form' method='POST' data-url='{{ request.build_absolute_uri|safe }}'> {% csrf_token %}
+ 		 <div class="form-group row">
+		 <div class="col-sm-6">
+		 <input class="form-control" type="text" name="url" required placeholder="https://picturewall.pl/..." id="id_url" />
+		 </div>
+		 <button class='btn btn-podglad' type='submit'><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Odczytaj</button>
+		 </div>
+		</form>
+		<form id="MyForm"><br>
+		
+			<div class="form-group row">
+		    <label for="szt" class="col-sm-2 col-form-label">Ilość sztuk:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="szt" name="szt">
+		    </div>
+		   </div>
+		    
+		  <div class="form-group row">
+		    <label for="w" class="col-sm-2 col-form-label">Szerokość:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="w" name="w"> cm
+		    </div>
+		   </div>
+		   
+		  <div class="form-group row">
+		    <label for="h" class="col-sm-2 col-form-label">Wysokość:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="h" name="h"> cm
+		    </div>
+		    </div>
+		    
+		  <div class="form-group row">
+		    <label for="podklad" class="col-sm-2 col-form-label">Podkład:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="podklad" name="podklad"> 
+		    </div>
+		    </div>
+		    
+		   <div class="form-group row">
+		    <label for="x" class="col-sm-2 col-form-label">Początek od lewej (x):</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="x" name="x"> cm
+		    </div>
+		   </div>
+		   
+		  <div class="form-group row">
+		    <label for="y" class="col-sm-2 col-form-label">Początek od góry (y):</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="y" name="y"> cm
+		    </div>
+		    </div>
+		    
+		  <div class="form-group row">
+		    <label for="filtr" class="col-sm-2 col-form-label">Filtr:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="filtr" name="filtr">
+		    </div>
+		    </div>
+		    
+		    <div class="form-group row">
+		    <label for="flip_x" class="col-sm-2 col-form-label">Odbicie poziome:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="flip_x" name="flip_x">
+		    </div>
+		    </div>
+		    
+		    <div class="form-group row">
+		    <label for="flip_y" class="col-sm-2 col-form-label">Odbicie pionowe:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="flip_y" name="flip_y">
+		    </div>
+		  </div>
+
+		    <div class="form-group row">
+		    <label for="laminat" class="col-sm-2 col-form-label">Laminacja:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="laminat" name="laminat">
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="powiel" class="col-sm-2 col-form-label">Powielenie wzoru:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="powiel" name="powiel"> x
+		    </div> 
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="sv" class="col-sm-2 col-form-label">Skala pionowa:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="sv" name="sv"> %
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="sh" class="col-sm-2 col-form-label">Skala pozioma:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="sh" name="sh"> %
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="obrot" class="col-sm-2 col-form-label">Obrót:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="obrot" name="obrot"> ° w lewo
+		    </div>
+		  </div>
+		  
+		  <div class="form-group row">
+		    <label for="cena" class="col-sm-2 col-form-label">Cena:</label>
+		    <div class="col-sm-8">
+		      <input type="text" readonly class="form-control-plaintext" id="cena" name="cena"> zł
+		    </div>
+		  </div>
+
+		</form><br>
+		<button type="button" class="btn btn-podglad" data-toggle="collapse" data-target="#demo"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> Pokaż wszystko</button>
+
+		<div id="demo" class="collapse"><br>
+		<div class="col-sm-6">
+			<div id="wrapper">
+				</div>
+		</div>
+		</div>
+		</div>
+
+
+{% endblock %}
+
+{% block javascript %}
+
+<script>
+$(document).ready(function(){
+	var $myForm = $('.my-ajax-form')
+	$myForm.submit(function(event){
+		event.preventDefault()
+		var $formData = $(this).serialize()
+		var $thisURL = $myForm.attr('data-url') || window.location.href
+		$.ajax({
+			method: "POST",
+			url: $thisURL,
+			data: $formData,
+			success: handleFormSuccess,
+			error: handleFormError,
+		})
+	})
+	
+	function handleFormSuccess(data, textStatus, jqXHR){
+		console.log(data)
+		console.log(textStatus)
+		console.log(jqXHR)
+		var wrapper = $('#wrapper'), container;
+		wrapper.empty()
+		//for (var key in data){
+			//container = $('<div id="grocery_item" class="container"></div>');
+			//wrapper.append(container);
+			//container.append('<div class="item">' + key + '</div>');
+			//}
+		var keys = Object.keys(data);
+		for(var i=0;i<keys.length;i++){
+			var key = keys[i];
+			container = $('<div id="grocery_item" class="container"></div>');
+			wrapper.append(container);
+			container.append('<div class="item">' + key + ': ' + data[key] + '</div>');
+    		//console.log(key, data[key]);
+			}
+		function populate(frm, data) {
+			$.each(data, function(key, value){
+			$('[name='+key+']', frm).val(value);
+			if (value==="p12"){
+				$('[name=podklad]', frm).val("Latex Premium");
+			} else if (value==="p13") {
+				$('[name=podklad]', frm).val("Flizelina");
+			} else if (value==="p7") {
+				$('[name=podklad]', frm).val("Flizelina Canvas");
+			} else if (value==="p8") {
+				$('[name=podklad]', frm).val("EasyStick");
+			} else if (value==="p3") {
+				$('[name=podklad]', frm).val("Canvas Premium");
+			}
+			
+			if (value==="none"){
+				$('[name=filtr]', frm).val("Brak");
+			} else if (value==="bw") {
+				$('[name=filtr]', frm).val("Czarno-Biały");
+			} else if (value==="sepia") {
+				$('[name=filtr]', frm).val("Sepia");
+			} else if (value==="cold") {
+				$('[name=filtr]', frm).val("Cold");
+			}
+			
+			});
+		}
+
+
+		populate('#MyForm', data);
+		$myForm[0].reset();
+	}
+	
+	function handleFormError(jqXHR, textStatus, errorThrown){
+		console.log(jqXHR)
+		console.log(textStatus)
+		console.log(errorThrown)
+	}
+})
+</script>
+
+{% endblock javascript %}

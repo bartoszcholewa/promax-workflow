@@ -1,0 +1,24 @@
+{% extends "homepage/header.html" %}
+{% block content %}
+
+  
+	<h1>{{ object.obieg_name }} <small>{{ object.kod_presta }}</small></h1>
+	{% if object.status|stringformat:"s" == "Wydrukowany" %}
+		<span class="label label-default">{{ object.status }}</span>
+	{% elif object.status|stringformat:"s" == "Nowy" %}
+		<span class="label label-primary">Nowy</span>
+	{% elif  object.status|stringformat:"s" == "Przygotowanie" %}
+		<span class="label label-warning">Przygotowanie</span>
+	{% elif object.status|stringformat:"s" == "Akceptacja" %}
+		<span class="label label-success">Akceptacja</span>
+	{% else %}
+		<span class="label label-danger">Status Nieznany</span>
+	{% endif %}
+Materiał: <strong>{{ object.material }}</strong> | Laminacja: {% if object.laminacja %}<strong>TAK</strong>{% else %}<strong>NIE</strong>{% endif %}</p>
+
+<h4><a target="_blank" href="{{ object.link_podgladu }}">PODGLĄD ZAMÓWIENIA</a></h4>
+<h5>Zamawiający: {{ object.zamawiajacy }}</h5>
+<p>Wystawił: {{ object.handlowiec }}</p>
+
+<small>Utworzono: {{ object.data_wprowadzenia }} | Edycja: {{ object.data_edycji|timesince }} temu</small>
+{% endblock %}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<title>Bartosz Cholewa - Homepage</title>
+	<meta charset="utf-8" />
+	{% load staticfiles %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="{% static 'homepage/css/bootstrap.min.css' %}" rel="stylesheet" id="bootstrap-css">
+	<script src="{% static 'homepage/js/jquery-1.12.4.min.js' %}"></script>
+    <script src="{% static 'homepage/js/bootstrap.min.js' %}"></script>
+</head>
+
+<body class="body" style="background-color:#f6f6f6">
+	
+	{% include "homepage/includes/navbar.html" %} 								<!-- MENU -->
+	
+	<div class="main">
+		{% block content %}
+		{% endblock %}	
+		{% include "homepage/includes/footer.html" %}     						<!-- Footer -->
+	</div>
+	<script>
+	function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+var csrftoken = getCookie('csrftoken');
+
+function csrfSafeMethod(method) {
+    // these HTTP methods do not require CSRF protection
+    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        }
+    }
+});
+</script>
+    {% block javascript %}
+    {% endblock javascript %}
+
+</body>
+
+</html>

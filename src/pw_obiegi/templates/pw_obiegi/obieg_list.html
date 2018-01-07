@@ -1,0 +1,142 @@
+{% extends "homepage/header.html" %}
+{% block content %}
+
+<style>
+/* Style the buttons that are used to open and close the accordion panel */
+.accordion {
+    background-color: white;
+    color: #051413;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    border-left: 5px solid #87ded7;
+    transition: 0.2s;
+}
+
+.accordion:hover {
+    background-color: #c3efeb;
+}
+.accordion.active {
+    background-color: #87ded7;
+    color: white;
+}
+
+
+.panel {
+    margin-bottom:10px;
+    border:none;
+    
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+.label-danger, .glyphicon-star, .przyciski {
+  float: right;
+  text-align: right;
+}
+*:focus {
+    outline: 0 !important;
+    outline-color: #37c8bc;
+}
+.link-bezposredni {
+    float: right;
+}
+.btn-podglad {
+    background-color: #4bcec3;
+    color: white;
+    font-weight: bold;
+    transition: 0.1s;
+
+}
+.btn-podglad:hover {
+    background-color: #2ca096;
+    color: white;
+}
+
+</style>
+<div class="col-md-6">
+  <h2>Lista Obiegów</h2><hr>
+  
+  {% for obj in object_list %}
+    {% if obj.status|stringformat:"s" == "Wydrukowany" %}
+      <button class="accordion"><h4>&nbsp;{{ obj.obieg_name }}
+    {% elif obj.status|stringformat:"s" == "Nowy" %}
+      <button class="accordion"><h4>&nbsp;<strong>{{ obj.obieg_name }}</strong>
+        <span class="glyphicon glyphicon-star"></span>
+    {% else %}
+      <button class="accordion"><h4>&nbsp;<strong>{{ obj.obieg_name }}</strong>
+        <span class="label label-danger">Status Nieznany</span>
+    {% endif %}</h4></button>
+      <div class="panel">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-4">
+              
+              <br>
+              <p>Materiał: <strong>{{ obj.material }}</strong></p>
+              <p>Laminacja: {% if obj.laminacja %}<strong>TAK</strong>{% else %}<strong>NIE</strong>{% endif %}</p>
+              <h5>Zamawiający: <strong>{{ obj.zamawiajacy }}</strong></h5>
+              
+            </div>
+            <div class="col-md-4">
+              
+              <br>
+              <strong>Uwagi:</strong> {{ obj.uwagi }}
+              
+            </div>
+            <div class="col-md-4 przyciski">
+              
+              <br>
+              {% if obj.status|stringformat:"s" == "Wydrukowany" %}
+              <div class="btn-group-vertical">
+                <a href="" class="btn btn-podglad disabled" role="button">Wydrukowany</a>
+                <a target="_blank" href="{{ obj.link_podgladu }}" class="btn btn-podglad" role="button"><span class="glyphicon glyphicon-share"></span> Podgląd zamówienia</a>
+                <a target="_blank" href='{% url "obiegi:detail" slug=obj.slug %}' class="btn btn-podglad" role="button"><span class="glyphicon glyphicon-link"></span> Link bezpośredni</a>
+              </div>
+              {% elif obj.status|stringformat:"s" == "Nowy" %}
+              <div class="btn-group-vertical">
+                <a target="_blank" href="{{ obj.link_podgladu }}" class="btn btn-podglad" role="button" onclick="return confirm('Zmienić status {{ obj.obieg_name }} na wydrukowany?');"><span class="glyphicon glyphicon-ok"></span> Wydrukuj</a>
+                <a target="_blank" href="{{ obj.link_podgladu }}" class="btn btn-podglad" role="button"><span class="glyphicon glyphicon-share"></span> Podgląd zamówienia</a>
+                <a target="_blank" href='{% url "obiegi:detail" slug=obj.slug %}' class="btn btn-podglad" role="button"><span class="glyphicon glyphicon-link"></span> Link bezpośredni</a>
+              </div>
+              {% endif %}
+              
+              
+              
+            </div>
+          </div>
+          <hr>
+          Wystawił: <strong>{{ obj.handlowiec }}</strong> dnia {{ obj.data_wprowadzenia|date:"Y-m-d H:i" }}
+          {% if not obj.data_wprowadzenia|date:"Y-m-d H:i" == obj.data_edycji|date:"Y-m-d H:i" %}
+            | Edycja: <span class="badge">{{ obj.data_edycji|date:"Y-m-d H:i" }}</span>
+          {% else %}
+          
+          {% endif %}
+        </div>
+        <br>
+    </div>
+  {% endfor %}
+</div>
+
+  <script>
+  var acc = document.getElementsByClassName("accordion");
+  var i;
+  
+  for (i = 0; i < acc.length; i++) {
+    acc[i].onclick = function() {
+      this.classList.toggle("active");
+      var panel = this.nextElementSibling;
+      if (panel.style.maxHeight){
+        panel.style.maxHeight = null;
+      } else {
+        panel.style.maxHeight = panel.scrollHeight + "px";
+      } 
+    }
+  }
+  </script>
+  
+{% endblock %}
