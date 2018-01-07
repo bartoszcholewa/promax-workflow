@@ -7,6 +7,9 @@ Django WebApp for better workflow
 
 
 Processlog:
+* v.0.2
+    - "Laminacja" isnt required to be checked when adding a new order
+    - Order author display as First Name + Last Name, not Username
 * v.0.1 
     - imported working version from Cloud9.io
     - created save_requirements.py to generate required packages from Cloud9.io

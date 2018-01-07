@@ -110,7 +110,7 @@
             </div>
           </div>
           <hr>
-          Wystawił: <strong>{{ obj.handlowiec }}</strong> dnia {{ obj.data_wprowadzenia|date:"Y-m-d H:i" }}
+          Wystawił: <strong>{{ obj.handlowiec.first_name }} {{ obj.handlowiec.last_name }}</strong> dnia {{ obj.data_wprowadzenia|date:"Y-m-d H:i" }}
           {% if not obj.data_wprowadzenia|date:"Y-m-d H:i" == obj.data_edycji|date:"Y-m-d H:i" %}
             | Edycja: <span class="badge">{{ obj.data_edycji|date:"Y-m-d H:i" }}</span>
           {% else %}
