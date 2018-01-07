@@ -25,7 +25,7 @@ SECRET_KEY = '2(97n2ci&b22o#3jyrap%zqb!bp%zmgvr3lm2earz4t!61&tc-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['nauka-bbcholewa.c9users.io']
+ALLOWED_HOSTS = ['nauka-bbcholewa.c9users.io', '127.0.0.1']
 
 
 # Application definition

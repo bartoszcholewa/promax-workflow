@@ -2,6 +2,7 @@
 .vscode
 .c9
 db.sqlite3
+snapshots
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
